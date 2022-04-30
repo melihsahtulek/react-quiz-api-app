@@ -1,0 +1,68 @@
+@import "styles/_variables.scss";
+
+.container {
+  background-color: rgba($color: $black, $alpha: 0.015);
+  border: 1px solid rgba($color: $black, $alpha: 0.025);
+  border-radius: $border-radius;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+
+  .logo {
+    h1 {
+      letter-spacing: 5px;
+      font-weight: $f-w-4;
+      text-transform: uppercase;
+    }
+  }
+
+  .themeSwitcher {
+    display: flex;
+    width: 60px;
+    height: 30px;
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+
+    > label {
+      flex: 1;
+      display: flex;
+      cursor: pointer;
+
+      > .icon {
+        flex: 0.5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      > .ball {
+        width: 50%;
+        height: 100%;
+        position: absolute;
+        border-radius: 50%;
+        transition: all 0.5s;
+        background-color: $white;
+
+        &.ballRight {
+          transform: translateX(100%);
+          border: 2px solid #001d6e;
+        }
+
+        &.ballLeft {
+          transform: translateX(0%);
+          border: 2px solid #4d77ff;
+        }
+      }
+    }
+
+    &.dark {
+      background-color: #001d6e;
+    }
+
+    &.light {
+      background-color: #4d77ff;
+    }
+  }
+}

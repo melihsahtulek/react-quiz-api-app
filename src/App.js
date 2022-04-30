@@ -1,10 +1,16 @@
+import Header from "components/Header";
 import styles from "styles/App.module.scss";
 
 const App = () => {
   return (
-    <main className={styles.app}>
-      <h2>App</h2>
-    </main>
+    <div className={styles.app}>
+      <header>
+        <Header />
+      </header>
+      <main>
+        <h3>main</h3>
+      </main>
+    </div>
   );
 };
 

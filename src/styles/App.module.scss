@@ -4,4 +4,15 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+
+  > header {
+    width: 768px;
+  }
+
+  > main {
+    width: 768px;
+    flex: 1;
+  }
 }
