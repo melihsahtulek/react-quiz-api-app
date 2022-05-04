@@ -5,21 +5,25 @@ import { Routes, Route, Link } from "react-router-dom";
 import Home from "pages/Home";
 import Question from "pages/Question";
 import Scoreboard from "pages/Scoreboard";
+// CONTEXT
+import { SelectProvider } from "context/SelectContext";
 
 const App = () => {
   return (
-    <div className={styles.app}>
-      <header>
-        <Header />
-      </header>
-      <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/question" element={<Question />} />
-          <Route path="/scoreboard" element={<Scoreboard />} />
-        </Routes>
-      </main>
-    </div>
+    <SelectProvider>
+      <div className={styles.app}>
+        <header>
+          <Header />
+        </header>
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/question" element={<Question />} />
+            <Route path="/scoreboard" element={<Scoreboard />} />
+          </Routes>
+        </main>
+      </div>
+    </SelectProvider>
   );
 };
 
