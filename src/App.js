@@ -3,7 +3,7 @@ import styles from "styles/App.module.scss";
 import { Routes, Route, Link } from "react-router-dom";
 // PAGES
 import Home from "pages/Home";
-import Question from "pages/Question";
+import Detail from "pages/Detail";
 import Scoreboard from "pages/Scoreboard";
 // CONTEXT
 import { SelectProvider } from "context/SelectContext";
@@ -18,7 +18,7 @@ const App = () => {
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/question" element={<Question />} />
+            <Route path="/detail" element={<Detail />} />
             <Route path="/scoreboard" element={<Scoreboard />} />
           </Routes>
         </main>
