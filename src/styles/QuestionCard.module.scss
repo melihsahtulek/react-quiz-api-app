@@ -42,14 +42,14 @@
         height: 25px;
         border-radius: $border-radius;
         overflow: hidden;
-        border: 1px solid #36ae7c;
+        border: 1px solid $green;
 
         &::-webkit-progress-bar {
           background-color: transparent;
         }
 
         &::-webkit-progress-value {
-          background-color: #36ae7c;
+          background-color: $green;
         }
       }
     }
@@ -85,6 +85,7 @@
           align-items: center;
           border-radius: $border-radius;
           transition: all 0.25s;
+          font-size: 0.85rem;
 
           &:hover {
             cursor: pointer;
@@ -93,6 +94,8 @@
         }
 
         input[type="radio"] {
+          display: none;
+
           &:checked + label {
             border-color: $blue;
           }
@@ -103,5 +106,13 @@
         }
       }
     }
+  }
+
+  .nextPrevFinishBtns {
+    margin-top: 1rem;
+    border-radius: $border-radius;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
   }
 }

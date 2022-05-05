@@ -1,4 +1,5 @@
 import styles from "styles/QuestionCard.module.scss";
+import Button from "components/Button";
 
 const QuestionCard = ({ category, question }) => {
   return (
@@ -24,18 +25,24 @@ const QuestionCard = ({ category, question }) => {
         </div>
         <div className={styles.options}>
           <div className={styles.option}>
-            <input type="radio" id="question_a" name="question_option" hidden />
+            <input type="radio" id="question_a" name="question_option" />
             <label htmlFor="question_a">option A</label>
           </div>
           <div className={styles.option}>
-            <input type="radio" id="question_a2" name="question_option" hidden />
+            <input type="radio" id="question_a2" name="question_option" />
             <label htmlFor="question_a2">option A</label>
           </div>
           <div className={styles.option}>
-            <input type="radio" id="question_a3" name="question_option" hidden />
+            <input type="radio" id="question_a3" name="question_option" />
             <label htmlFor="question_a3">option A</label>
           </div>
         </div>
+      </div>
+
+      <div className={styles.nextPrevFinishBtns}>
+        <Button title="previous question" bgColor="#9772fb" />
+        <Button title="next question" bgColor="#764af1" />
+        <Button title="finish quiz" bgColor="#F32424" />
       </div>
     </div>
   );
