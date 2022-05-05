@@ -1,0 +1,67 @@
+@import "styles/_variables.scss";
+
+.container {
+  background-color: rgba($color: $black, $alpha: 0.015);
+  border: 1px solid rgba($color: $black, $alpha: 0.025);
+  border-radius: $border-radius;
+  padding: 1rem;
+  margin-top: 1rem;
+
+  .result {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: $border-radius;
+    overflow: hidden;
+
+    .box {
+      width: 50%;
+      height: 150px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      > h4 {
+        color: $white;
+        text-transform: uppercase;
+        font-weight: $f-w-5;
+      }
+
+      > h2 {
+        font-weight: $f-w-5;
+        font-size: 1.75rem;
+      }
+
+      &:nth-of-type(1) {
+        background-color: $green;
+      }
+
+      &:nth-of-type(2) {
+        background-color: $red;
+      }
+
+      &:nth-of-type(3) {
+        background-color: #764af1;
+      }
+
+      &:nth-of-type(4) {
+        background-color: #4d96ff;
+      }
+
+      &:nth-of-type(5) {
+        background-color: #f8cb2e;
+      }
+
+      &:nth-of-type(6) {
+        background-color: #fdaf75;
+      }
+    }
+  }
+
+  .startNewQuiz {
+    margin-top: 1rem;
+    border-radius: $border-radius;
+    overflow: hidden;
+  }
+}
