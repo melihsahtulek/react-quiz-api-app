@@ -1,12 +1,11 @@
 @import "styles/_variables.scss";
 
 .questionCard {
-  margin-top: 1rem;
-
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 
     .catName {
       small {
@@ -38,7 +37,7 @@
       }
 
       progress {
-        width: 200px;
+        width: 150px;
         height: 25px;
         border-radius: $border-radius;
         overflow: hidden;
