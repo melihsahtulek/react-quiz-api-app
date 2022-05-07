@@ -1,14 +1,17 @@
 import styles from "styles/Select.module.scss";
 import GetIcon from "components/GetIcon";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import SelectContext from "context/SelectContext";
 import clsx from "clsx";
 
 const Select = ({ options, title, id, selectsValues, setSelectsValues }) => {
   const { activeSelect, setActiveSelect } = useContext(SelectContext);
+  const [selectedValue, setSelectedValue] = useState(title);
 
   useEffect(() => {
-    document.addEventListener("click", ({ target }) => (target?.getAttribute("class")?.includes("select") ? false : setActiveSelect(null)));
+    document.addEventListener("click", ({ target }) => {
+      return target?.getAttribute("class")?.includes("select") ? false : setActiveSelect(null);
+    });
   }, []);
 
   const setValue = (obj) => {
@@ -31,6 +34,8 @@ const Select = ({ options, title, id, selectsValues, setSelectsValues }) => {
       arr.push(obj);
     }
 
+    let { name } = options.filter((option) => option.id === obj.option_id)[0];
+    setSelectedValue(name);
     setSelectsValues(arr);
   };
 
@@ -43,9 +48,9 @@ const Select = ({ options, title, id, selectsValues, setSelectsValues }) => {
       }}
     >
       <div className={clsx(styles.selectHeader, activeSelect === id ? styles.active : styles.notActive)}>
-        <h4>{title}</h4>
-        <div className={styles.icon}>
-          <GetIcon icon="BsCaretDownFill" size={17} />
+        <h4 className="select_title">{selectedValue}</h4>
+        <div className={clsx(styles.icon, "select_icon")}>
+          <GetIcon icon="BsCaretDownFill" size={15} />
         </div>
       </div>
 

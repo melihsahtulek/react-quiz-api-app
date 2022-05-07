@@ -1,18 +1,15 @@
 @import "styles/_variables.scss";
 
-.home {
+.container {
   background-color: rgba($color: $black, $alpha: 0.015);
   border: 1px solid rgba($color: $black, $alpha: 0.025);
   border-radius: $border-radius;
   padding: 1rem;
   margin-top: 1rem;
 
-  .select:not(:last-of-type) {
-    margin-bottom: 1rem;
-  }
-
-  .startBtn {
-    border-radius: $border-radius;
-    overflow: hidden;
+  > h4 {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: $f-w-5;
   }
 }
