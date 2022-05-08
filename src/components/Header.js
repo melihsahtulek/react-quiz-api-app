@@ -1,19 +1,24 @@
 import styles from "styles/Header.module.scss";
 import GetIcon from "components/GetIcon";
-import { useContext, useState } from "react";
+import { useContext, useEffect } from "react";
 import clsx from "clsx";
 import ThemeContext from "context/ThemeContext";
 
 const Header = () => {
-  const [theme, setTheme] = useState("light");
   const { currentTheme, setCurrentTheme } = useContext(ThemeContext);
+
+  useEffect(() => {
+    let theme = localStorage.getItem("theme");
+    !theme && localStorage.setItem("theme", currentTheme);
+    setCurrentTheme(theme);
+  });
 
   return (
     <div className={styles.container}>
       <div className={styles.logo}>
         <h1>mt-quiz</h1>
       </div>
-      <div className={clsx(styles.themeSwitcher, theme === "dark" ? styles.dark : styles.light)}>
+      <div className={clsx(styles.themeSwitcher, currentTheme === "dark" ? styles.dark : styles.light)}>
         <label htmlFor="themeCheckbox">
           <input
             type="checkbox"
@@ -22,6 +27,8 @@ const Header = () => {
             hidden
             onChange={() => {
               // THEME
+              currentTheme === "light" ? setCurrentTheme("dark") : setCurrentTheme("light");
+              localStorage.setItem("theme", currentTheme === "light" ? "dark" : "light");
             }}
           />
           <div className={styles.icon}>
@@ -30,7 +37,7 @@ const Header = () => {
           <div className={styles.icon}>
             <GetIcon icon="BsFillSunFill" size={16} color="#F8CB2E" />
           </div>
-          <div className={clsx(styles.ball, theme === "dark" ? styles.ballRight : styles.ballLeft)}></div>
+          <div className={clsx(styles.ball, currentTheme === "dark" ? styles.ballRight : styles.ballLeft)}></div>
         </label>
       </div>
     </div>
