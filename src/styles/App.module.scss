@@ -9,11 +9,23 @@
 
   > header {
     width: 768px;
+    background-color: inherit;
   }
 
   > main {
     width: 768px;
     flex: 1;
+    background-color: inherit;
+  }
+
+  &.light {
+    background-color: $white;
+    color: $black;
+  }
+
+  &.dark {
+    background-color: $black;
+    color: $white;
   }
 }
 

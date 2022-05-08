@@ -1,10 +1,12 @@
 import styles from "styles/Header.module.scss";
 import GetIcon from "components/GetIcon";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import clsx from "clsx";
+import ThemeContext from "context/ThemeContext";
 
 const Header = () => {
   const [theme, setTheme] = useState("light");
+  const { currentTheme, setCurrentTheme } = useContext(ThemeContext);
 
   return (
     <div className={styles.container}>
@@ -13,7 +15,15 @@ const Header = () => {
       </div>
       <div className={clsx(styles.themeSwitcher, theme === "dark" ? styles.dark : styles.light)}>
         <label htmlFor="themeCheckbox">
-          <input type="checkbox" name="themeCheckbox" id="themeCheckbox" hidden onChange={() => setTheme((current) => (current === "dark" ? "light" : "dark"))} />
+          <input
+            type="checkbox"
+            name="themeCheckbox"
+            id="themeCheckbox"
+            hidden
+            onChange={() => {
+              // THEME
+            }}
+          />
           <div className={styles.icon}>
             <GetIcon icon="BsMoonStarsFill" size={16} color="#F8CB2E" />
           </div>

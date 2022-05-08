@@ -22,10 +22,9 @@ const Home = () => {
     { id: 10, name: 50 },
   ];
   const difficulty = [
-    { id: 1, name: "any difficulty" },
-    { id: 2, name: "easy" },
-    { id: 3, name: "medium" },
-    { id: 4, name: "hard" },
+    { id: 1, name: "easy" },
+    { id: 2, name: "medium" },
+    { id: 3, name: "hard" },
   ];
 
   return !isLoading ? (
@@ -39,13 +38,7 @@ const Home = () => {
       </div>
 
       <div className={styles.select}>
-        <Select
-          id="categories"
-          title="select category"
-          options={[{ id: data.trivia_categories.length, name: "any categorgy" }, ...data.trivia_categories]}
-          selectsValues={selectsValues}
-          setSelectsValues={setSelectsValues}
-        />
+        <Select id="categories" title="select category" options={data.trivia_categories} selectsValues={selectsValues} setSelectsValues={setSelectsValues} />
       </div>
 
       <div className={styles.select}>

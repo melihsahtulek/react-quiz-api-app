@@ -4,6 +4,8 @@
   position: relative;
   background-color: $white;
   user-select: none;
+  border-radius: $border-radius;
+  background-color: inherit;
 
   .selectHeader {
     border: 1px solid $blue;
@@ -15,9 +17,10 @@
     height: calc(30px + 0.5rem);
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
+    background-color: inherit;
 
     > h4 {
-      color: $black;
+      color: inherit;
       line-height: 1;
       font-weight: $f-w-4;
       font-size: 0.8rem;
@@ -69,18 +72,21 @@
     // display: none;
     max-height: 20vh;
     overflow: auto;
+    background-color: inherit;
 
     .option {
       display: flex;
       align-items: center;
       padding: 0 0.5rem;
       min-height: 30px;
+      background-color: inherit;
 
       > span {
         text-transform: capitalize;
         font-weight: $f-w-4;
         font-size: 0.9rem;
         line-height: 1.5;
+        color: inherit;
       }
 
       &:not(:last-of-type) {
