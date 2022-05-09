@@ -1,16 +1,21 @@
 import Select from "components/Select";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styles from "styles/Home.module.scss";
 import useRequest from "hooks/useRequest";
 import Loading from "components/Loading";
 import Error from "components/Error";
 import Button from "components/Button";
+import { useNavigate } from "react-router-dom";
+import QuizContext from "context/QuizContext";
 
 const Home = () => {
+  const { data, isLoading, error } = useRequest("https://opentdb.com/api_category.php");
+  const navigate = useNavigate();
+  const { setEndpoint } = useContext(QuizContext);
   const [selectsValues, setSelectsValues] = useState([
     // init values
     {
-      name: "numberOfQuestions",
+      name: "amount",
       value: 10,
       value_id: null,
     },
@@ -31,7 +36,6 @@ const Home = () => {
     },
   ]);
 
-  const { data, isLoading, error } = useRequest("https://opentdb.com/api_category.php");
   const numberOfQuestions = [
     { id: 1, name: 5 },
     { id: 2, name: 10 },
@@ -49,27 +53,28 @@ const Home = () => {
     { id: 2, name: "medium" },
     { id: 3, name: "hard" },
   ];
-
   const type = [
-    { id: 1, name: "multiple choice" },
-    { id: 2, name: "true/false" },
+    { id: 1, name: "multiple" },
+    { id: 2, name: "boolean" },
   ];
 
-  const startTheQuiz = () => {
-    // example endpoint: https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple
-
+  const startTheQuiz = (event) => {
+    event.preventDefault();
     let url = `https://opentdb.com/api.php?`;
     for (const obj of selectsValues) {
       if (obj.value !== null) {
         if (obj.name === "categories") {
-          url += `&${obj.value_id}`;
+          url += `category=${obj.value_id}&`;
         } else {
-          url += `&${obj.value}`;
+          if (obj.value !== "any") {
+            url += `${obj.name}=${obj.value}&`;
+          }
         }
       }
     }
 
-    console.log(url);
+    setEndpoint(url);
+    navigate("/quiz");
   };
 
   return !isLoading ? (
@@ -79,7 +84,7 @@ const Home = () => {
   ) : (
     <section className={styles.home}>
       <div className={styles.select}>
-        <Select id="numberOfQuestions" title="Number of Questions" options={numberOfQuestions} selectsValues={selectsValues} setSelectsValues={setSelectsValues} />
+        <Select id="amount" title="Number of Questions" options={numberOfQuestions} selectsValues={selectsValues} setSelectsValues={setSelectsValues} />
       </div>
 
       <div className={styles.select}>
@@ -97,12 +102,6 @@ const Home = () => {
       <div className={styles.startBtn}>
         <Button bgColor="#36ae7c" title="start quiz" event={startTheQuiz} />
       </div>
-
-      <br />
-      <br />
-      <br />
-
-      <code>{JSON.stringify(selectsValues)}</code>
     </section>
   );
 };

@@ -1,7 +1,17 @@
 import QuestionCard from "components/QuestionCard";
-import styles from "styles/Detail.module.scss";
+import QuizContext from "context/QuizContext";
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import styles from "styles/Quiz.module.scss";
 
-const Detail = () => {
+const Quiz = () => {
+  const { endpoint } = useContext(QuizContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    endpoint === "" && navigate("/");
+  }, []);
+
   return (
     <div className={styles.detail}>
       <div className={styles.question}>
@@ -17,4 +27,4 @@ const Detail = () => {
   );
 };
 
-export default Detail;
+export default Quiz;
