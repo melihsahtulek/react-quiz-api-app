@@ -1,29 +1,44 @@
+import Error from "components/Error";
+import Loading from "components/Loading";
 import QuestionCard from "components/QuestionCard";
 import QuizContext from "context/QuizContext";
-import { useContext, useEffect } from "react";
+import useRequest from "hooks/useRequest";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "styles/Quiz.module.scss";
 
 const Quiz = () => {
-  const { endpoint } = useContext(QuizContext);
+  const { endpoint, quizQuestions, setQuizQuestions } = useContext(QuizContext);
+  const { data, isLoading, error } = useRequest(endpoint);
+  const [index, setIndex] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
     endpoint === "" && navigate("/");
-  }, []);
 
-  return (
-    <div className={styles.detail}>
-      <div className={styles.question}>
-        <QuestionCard
-          category={"category"}
-          type={"multiple"}
-          question={"What is the capital city of New Zealand?"}
-          correctAnswer={"correct_answer"}
-          incorrectAnswers={["Auckland", "Christchurch", "Melbourne"]}
-        />
+    setQuizQuestions(data.results);
+  }, [endpoint, data, isLoading, error]);
+
+  return !isLoading ? (
+    <Loading />
+  ) : error.message && error.name ? (
+    <Error error={error} />
+  ) : (
+    quizQuestions &&
+    quizQuestions.length > 0 && (
+      <div className={styles.detail}>
+        <div className={styles.question}>
+          <QuestionCard
+            category={quizQuestions[index].category}
+            type={quizQuestions[index].type}
+            question={quizQuestions[index].question}
+            correctAnswer={quizQuestions[index].correct_answer}
+            incorrectAnswers={quizQuestions[index].incorrect_answers}
+            index={index}
+          />
+        </div>
       </div>
-    </div>
+    )
   );
 };
 
