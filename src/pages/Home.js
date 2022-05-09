@@ -7,7 +7,30 @@ import Error from "components/Error";
 import Button from "components/Button";
 
 const Home = () => {
-  const [selectsValues, setSelectsValues] = useState([]);
+  const [selectsValues, setSelectsValues] = useState([
+    // init values
+    {
+      name: "numberOfQuestions",
+      value: 10,
+      value_id: null,
+    },
+    {
+      name: "categories",
+      value: null,
+      value_id: null,
+    },
+    {
+      name: "difficulty",
+      value: null,
+      value_id: null,
+    },
+    {
+      name: "type",
+      value: "any",
+      value_id: null,
+    },
+  ]);
+
   const { data, isLoading, error } = useRequest("https://opentdb.com/api_category.php");
   const numberOfQuestions = [
     { id: 1, name: 5 },
@@ -27,6 +50,28 @@ const Home = () => {
     { id: 3, name: "hard" },
   ];
 
+  const type = [
+    { id: 1, name: "multiple choice" },
+    { id: 2, name: "true/false" },
+  ];
+
+  const startTheQuiz = () => {
+    // example endpoint: https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple
+
+    let url = `https://opentdb.com/api.php?`;
+    for (const obj of selectsValues) {
+      if (obj.value !== null) {
+        if (obj.name === "categories") {
+          url += `&${obj.value_id}`;
+        } else {
+          url += `&${obj.value}`;
+        }
+      }
+    }
+
+    console.log(url);
+  };
+
   return !isLoading ? (
     <Loading />
   ) : error.message && error.name ? (
@@ -38,16 +83,26 @@ const Home = () => {
       </div>
 
       <div className={styles.select}>
-        <Select id="categories" title="select category" options={data.trivia_categories} selectsValues={selectsValues} setSelectsValues={setSelectsValues} />
+        <Select id="categories" title="category" options={data.trivia_categories} selectsValues={selectsValues} setSelectsValues={setSelectsValues} />
       </div>
 
       <div className={styles.select}>
-        <Select id="difficulty" title="select difficulty" options={difficulty} selectsValues={selectsValues} setSelectsValues={setSelectsValues} />
+        <Select id="difficulty" title="difficulty" options={difficulty} selectsValues={selectsValues} setSelectsValues={setSelectsValues} />
+      </div>
+
+      <div className={styles.select}>
+        <Select id="type" title="type" options={type} selectsValues={selectsValues} setSelectsValues={setSelectsValues} />
       </div>
 
       <div className={styles.startBtn}>
-        <Button bgColor="#36ae7c" title="start quiz" />
+        <Button bgColor="#36ae7c" title="start quiz" event={startTheQuiz} />
       </div>
+
+      <br />
+      <br />
+      <br />
+
+      <code>{JSON.stringify(selectsValues)}</code>
     </section>
   );
 };

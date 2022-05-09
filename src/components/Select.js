@@ -5,8 +5,8 @@ import SelectContext from "context/SelectContext";
 import clsx from "clsx";
 
 const Select = ({ options, title, id, selectsValues, setSelectsValues }) => {
-  const { activeSelect, setActiveSelect } = useContext(SelectContext);
-  const [selectedValue, setSelectedValue] = useState(title);
+  const { activeSelect, setActiveSelect } = useContext(SelectContext); // show/hide
+  const [selectedValue, setSelectedValue] = useState(title); // for select title
 
   useEffect(() => {
     document.addEventListener("click", ({ target }) => {
@@ -17,26 +17,24 @@ const Select = ({ options, title, id, selectsValues, setSelectsValues }) => {
   const setValue = (obj) => {
     let arr = [...selectsValues];
     if (arr.length > 0) {
-      let index = null;
-      let filter = arr.filter((item, i) => {
-        if (item.select_id === obj.select_id) {
+      let index = 0;
+      let filter = arr.filter((item) => item.name === obj.select_id)[0];
+
+      filter.value = obj.option_value;
+      filter.value_id = obj.option_id;
+
+      arr.forEach((item, i) => {
+        if (item.name === obj.select_id) {
           index = i;
         }
-        return item.select_id === obj.select_id;
       });
 
-      if (filter.length > 0) {
-        arr[index] = obj;
-      } else {
-        arr.push(obj);
-      }
-    } else {
-      arr.push(obj);
+      arr[index] = filter;
+      setSelectsValues(arr);
     }
 
     let { name } = options.filter((option) => option.id === obj.option_id)[0];
     setSelectedValue(name);
-    setSelectsValues(arr);
   };
 
   return (
@@ -56,7 +54,7 @@ const Select = ({ options, title, id, selectsValues, setSelectsValues }) => {
 
       <div className={clsx(styles.selectContent, activeSelect === id ? styles.show : styles.hide)}>
         {options.map((option) => (
-          <div className={styles.option} key={option.id} onClick={() => setValue({ select_id: id, option_id: option.id })}>
+          <div className={styles.option} key={option.id} onClick={() => setValue({ select_id: id, option_id: option.id, option_value: option.name })}>
             <span>{option.name}</span>
           </div>
         ))}
