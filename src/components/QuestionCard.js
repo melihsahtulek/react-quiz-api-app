@@ -3,10 +3,20 @@ import Button from "components/Button";
 import QuizContext from "context/QuizContext";
 import { useContext } from "react";
 
-const QuestionCard = ({ category, type, question, correctAnswer, incorrectAnswers, index }) => {
+const QuestionCard = ({ category, type, question, correctAnswer, incorrectAnswers, index, setIndex }) => {
   const { quizQuestions } = useContext(QuizContext);
 
   const letters = ["A", "B", "C", "D", "E"];
+
+  const nextQuestion = () => {
+    console.log("nextQuestion");
+    index + 1 < quizQuestions.length ? setIndex((i) => i + 1) : console.log("finish!");
+  };
+
+  const prevQuestion = () => {
+    console.log("prevQuestion");
+    index + 1 > 1 && setIndex((i) => i - 1);
+  };
 
   return (
     <div className={styles.questionCard}>
@@ -36,8 +46,8 @@ const QuestionCard = ({ category, type, question, correctAnswer, incorrectAnswer
           {type === "multiple" ? (
             [...incorrectAnswers, correctAnswer].map((option, i) => (
               <div className={styles.option} key={i}>
-                <input type="radio" id="question_a" name="question_option" />
-                <label htmlFor="question_a">
+                <input type="radio" id={option} name="question_option" />
+                <label htmlFor={option}>
                   {letters[i]}
                   {". "} {option}
                 </label>
@@ -46,12 +56,12 @@ const QuestionCard = ({ category, type, question, correctAnswer, incorrectAnswer
           ) : (
             <>
               <div className={styles.option}>
-                <input type="radio" id="question_a" name="question_option" />
-                <label htmlFor="question_a">True</label>
+                <input type="radio" id="question_true" name="question_option" />
+                <label htmlFor="question_true">True</label>
               </div>
               <div className={styles.option}>
-                <input type="radio" id="question_a" name="question_option" />
-                <label htmlFor="question_a">False</label>
+                <input type="radio" id="question_false" name="question_option" />
+                <label htmlFor="question_false">False</label>
               </div>
             </>
           )}
@@ -59,8 +69,8 @@ const QuestionCard = ({ category, type, question, correctAnswer, incorrectAnswer
       </div>
 
       <div className={styles.nextPrevFinishBtns}>
-        <Button title="previous question" bgColor="#9772fb" />
-        <Button title="next question" bgColor="#764af1" />
+        <Button title="previous question" bgColor="#9772fb" event={prevQuestion} />
+        <Button title="next question" bgColor="#764af1" event={nextQuestion} />
         <Button title="finish quiz" bgColor="#F32424" />
       </div>
     </div>

@@ -35,6 +35,7 @@ const Quiz = () => {
             correctAnswer={quizQuestions[index].correct_answer}
             incorrectAnswers={quizQuestions[index].incorrect_answers}
             index={index}
+            setIndex={setIndex}
           />
         </div>
       </div>
