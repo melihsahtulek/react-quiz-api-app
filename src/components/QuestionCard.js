@@ -1,21 +1,51 @@
 import styles from "styles/QuestionCard.module.scss";
 import Button from "components/Button";
 import QuizContext from "context/QuizContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const QuestionCard = ({ category, type, question, correctAnswer, incorrectAnswers, index, setIndex }) => {
-  const { quizQuestions } = useContext(QuizContext);
+  const { quizQuestions, yourAnswers, setYourAnswers, isQuizFinished, setIsQuizFinished } = useContext(QuizContext);
+  const [value, setValue] = useState(100 / quizQuestions.length);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    isQuizFinished && navigate("/");
+
+    const inputs = document.querySelectorAll("input[type=radio]");
+    for (const input of inputs) {
+      input.checked = false;
+    }
+  }, [index]);
 
   const letters = ["A", "B", "C", "D", "E"];
 
   const nextQuestion = () => {
-    console.log("nextQuestion");
-    index + 1 < quizQuestions.length ? setIndex((i) => i + 1) : console.log("finish!");
+    if (index + 1 < quizQuestions.length) {
+      setIndex((i) => i + 1);
+      setValue((val) => (val += 100 / quizQuestions.length));
+    } else {
+      navigate("/scoreboard");
+      setIsQuizFinished(true);
+    }
   };
 
   const prevQuestion = () => {
-    console.log("prevQuestion");
-    index + 1 > 1 && setIndex((i) => i - 1);
+    if (index + 1 > 1) {
+      setIndex((i) => i - 1);
+      setValue((val) => (val -= 100 / quizQuestions.length));
+    }
+  };
+
+  const saveYourAnswer = (option) => {
+    let arr = [...yourAnswers];
+    arr[index] = {
+      questionIndex: index,
+      yourAnswer: option,
+      correctAnswer,
+    };
+
+    setYourAnswers(arr);
   };
 
   return (
@@ -32,9 +62,7 @@ const QuestionCard = ({ category, type, question, correctAnswer, incorrectAnswer
               {index + 1}/{quizQuestions.length}
             </span>
           </small>
-          <progress id="file" value="10" max="100">
-            32%
-          </progress>
+          <progress id="file" value={value} max="100" />
         </div>
       </div>
 
@@ -46,7 +74,7 @@ const QuestionCard = ({ category, type, question, correctAnswer, incorrectAnswer
           {type === "multiple" ? (
             [...incorrectAnswers, correctAnswer].map((option, i) => (
               <div className={styles.option} key={i}>
-                <input type="radio" id={option} name="question_option" />
+                <input type="radio" id={option} name="question_option" onClick={() => saveYourAnswer(option)} />
                 <label htmlFor={option}>
                   {letters[i]}
                   {". "} {option}
@@ -56,11 +84,11 @@ const QuestionCard = ({ category, type, question, correctAnswer, incorrectAnswer
           ) : (
             <>
               <div className={styles.option}>
-                <input type="radio" id="question_true" name="question_option" />
+                <input type="radio" id="question_true" name="question_option" onClick={() => saveYourAnswer("true")} />
                 <label htmlFor="question_true">True</label>
               </div>
               <div className={styles.option}>
-                <input type="radio" id="question_false" name="question_option" />
+                <input type="radio" id="question_false" name="question_option" onClick={() => saveYourAnswer("false")} />
                 <label htmlFor="question_false">False</label>
               </div>
             </>
@@ -71,7 +99,14 @@ const QuestionCard = ({ category, type, question, correctAnswer, incorrectAnswer
       <div className={styles.nextPrevFinishBtns}>
         <Button title="previous question" bgColor="#9772fb" event={prevQuestion} />
         <Button title="next question" bgColor="#764af1" event={nextQuestion} />
-        <Button title="finish quiz" bgColor="#F32424" />
+        <Button
+          title="finish quiz"
+          bgColor="#F32424"
+          event={() => {
+            setIsQuizFinished(true);
+            navigate("/scoreboard");
+          }}
+        />
       </div>
     </div>
   );
