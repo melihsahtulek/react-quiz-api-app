@@ -7,6 +7,7 @@ import Error from "components/Error";
 import Button from "components/Button";
 import { useNavigate } from "react-router-dom";
 import QuizContext from "context/QuizContext";
+import banner from "images/wallpaper.svg";
 
 const Home = () => {
   const { data, isLoading, error } = useRequest("https://opentdb.com/api_category.php");
@@ -82,27 +83,32 @@ const Home = () => {
   ) : error.message && error.name ? (
     <Error error={error} />
   ) : (
-    <section className={styles.home}>
-      <div className={styles.select}>
-        <Select id="amount" title="Number of Questions" options={numberOfQuestions} selectsValues={selectsValues} setSelectsValues={setSelectsValues} />
+    <>
+      <div className={styles.banner}>
+        <img src={banner} alt="banner" />
       </div>
+      <section className={styles.home}>
+        <div className={styles.select}>
+          <Select id="amount" title="Number of Questions" options={numberOfQuestions} selectsValues={selectsValues} setSelectsValues={setSelectsValues} />
+        </div>
 
-      <div className={styles.select}>
-        <Select id="categories" title="category" options={data.trivia_categories} selectsValues={selectsValues} setSelectsValues={setSelectsValues} />
-      </div>
+        <div className={styles.select}>
+          <Select id="categories" title="category" options={data.trivia_categories} selectsValues={selectsValues} setSelectsValues={setSelectsValues} />
+        </div>
 
-      <div className={styles.select}>
-        <Select id="difficulty" title="difficulty" options={difficulty} selectsValues={selectsValues} setSelectsValues={setSelectsValues} />
-      </div>
+        <div className={styles.select}>
+          <Select id="difficulty" title="difficulty" options={difficulty} selectsValues={selectsValues} setSelectsValues={setSelectsValues} />
+        </div>
 
-      <div className={styles.select}>
-        <Select id="type" title="type" options={type} selectsValues={selectsValues} setSelectsValues={setSelectsValues} />
-      </div>
+        <div className={styles.select}>
+          <Select id="type" title="type" options={type} selectsValues={selectsValues} setSelectsValues={setSelectsValues} />
+        </div>
 
-      <div className={styles.startBtn}>
-        <Button bgColor="#36ae7c" title="start quiz" event={startTheQuiz} />
-      </div>
-    </section>
+        <div className={styles.startBtn}>
+          <Button bgColor="#36ae7c" title="start quiz" event={startTheQuiz} />
+        </div>
+      </section>
+    </>
   );
 };
 

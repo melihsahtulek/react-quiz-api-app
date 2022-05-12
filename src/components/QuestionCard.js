@@ -25,8 +25,8 @@ const QuestionCard = ({ category, type, question, correctAnswer, incorrectAnswer
       setIndex((i) => i + 1);
       setValue((val) => (val += 100 / quizQuestions.length));
     } else {
-      navigate("/scoreboard");
       setIsQuizFinished(true);
+      navigate("/scoreboard");
     }
   };
 

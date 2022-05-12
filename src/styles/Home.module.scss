@@ -1,15 +1,28 @@
 @import "styles/_variables.scss";
 
+.banner {
+  height: 30vh;
+  background-color: rgba($color: $black, $alpha: 0.015);
+  border: 1px solid rgba($color: $black, $alpha: 0.025);
+  border-radius: $border-radius;
+  margin-top: 1rem;
+
+  & > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
 .home {
   background-color: rgba($color: $black, $alpha: 0.015);
   border: 1px solid rgba($color: $black, $alpha: 0.025);
   border-radius: $border-radius;
   padding: 1rem;
   margin-top: 1rem;
-  background-color: inherit;
 
   .select {
-    background-color: inherit;
     &:not(:last-of-type) {
       margin-bottom: 1rem;
     }
