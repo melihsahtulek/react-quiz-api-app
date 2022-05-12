@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/1bde9b2e-c200-4679-a509-cc2350210ef4/deploy-status)](https://app.netlify.com/sites/mt-react-quiz-app/deploys)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
